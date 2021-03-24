@@ -314,8 +314,6 @@ function Board(width, height) {
 	this.width = width;
 	this.height = height;
 	this.grid = {}; /* 6. Estructura de datos introducida en el EJERCICIO 6 */
-	console.log("askdjfasdfhaskldfja")
-	console.log(this.grid);
 
 }
 
@@ -445,6 +443,15 @@ Tetris.prototype.key_pressed = function(e) {
 			console.log("Abajo");
 			direccion="Down"
 			break;
+		// TU CÓDIGO AQUÍ: Añadir una condición para que si el jugador pulsa la tecla "Espacio", la pieza caiga en picado
+		case 32:
+			console.log("Espacio");
+			var pos = Tetris.DIRECTION["Down"];
+			while(this.current_shape.can_move(this.board,pos[0],pos[1])){ //Mientras la pieza se pueda mover hacia abajo
+				this.do_move("Down");//Mover la pieza hasta abajo
+			}
+			direccion="Down" //Establecer otra vez la dirección para que vuelva a llamar al método
+			break;
 	}
 	if(direccion != null){
 		this.do_move(direccion);
@@ -462,18 +469,17 @@ Tetris.prototype.do_move = function(direction) {
 	// se puede mover con ese desplazamiento. En caso afirmativo, mueve la pieza. 
 
 	var nuevaPos = Tetris.DIRECTION[direction];
-	//console.log(nuevaPos);
-	var x= nuevaPos[0];
-	var y= nuevaPos[1];
-	if (this.current_shape.can_move(this.board,x,y) ) { //Si la pieza se puede mover, moverlo en la nueva dirección
-		this.current_shape.move(x,y);
+	var x = nuevaPos[0];
+	var y = nuevaPos[1];
+	if (this.current_shape.can_move(this.board, x, y)) { //Si la pieza se puede mover, moverlo en la nueva dirección
+		this.current_shape.move(x, y);
 	}
-	/* Código que se pide en el EJERCICIO 6 */
+		/* Código que se pide en el EJERCICIO 6 */
 		// else if(direction=='Down')
 	// TU CÓDIGO AQUÍ: añade la pieza actual al grid. Crea una nueva pieza y dibújala en el tablero.
-	else if (direction === "Down"){
+	else if (direction === "Down") {
 		this.board.add_shape(this.current_shape);
-		this.current_shape= this.create_new_shape();
+		this.current_shape = this.create_new_shape();
 		this.board.draw_shape(this.current_shape);
 	}
 
